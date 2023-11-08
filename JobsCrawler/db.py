@@ -8,11 +8,13 @@ class DB:
   def __init__(self):
     try:
       db_config = read_db_config('config.ini', 'mysql')
-      # print(db_config)
+      print(db_config)
       self.conn = mysql.connector.connect(**db_config)
+      print(self.conn)
     except mysql.connector.Error as err:
       if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
         print("Something is wrong with your user name or password")
+        exit(0)
       elif err.errno == errorcode.ER_BAD_DB_ERROR:
         print("Database does not exist")
       else:
@@ -61,5 +63,5 @@ class DB:
 if __name__ == "__main__":
   db = DB()
   # db.drop_jobs_table()
-  # db.create_jobs_table()
+  db.create_jobs_table()
   db.insert_row(('PubTitle3', datetime.now() , 'contnet'))
